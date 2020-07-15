@@ -844,7 +844,7 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
                     #print(key_a)
                     textlist=dic[key_a]
                     #print(textlist)
-                    if count=>num:
+                    if count>=num:
                         if key_a == ".":
                             
                             nextfile.write("%s %s\n\n" % (key_a, textlist))
