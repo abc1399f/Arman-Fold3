@@ -88,7 +88,7 @@ do_lower_case = False
 # "How many steps to make in each estimator call."
 # iterations_per_loop = 1000
 parser = argparse.ArgumentParser()
-parser.add_argument("-- data-portion",
+parser.add_argument("-- data_portion",
                         default=0.025,
                         type=float,
                         help="data portion.")
@@ -831,7 +831,7 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
                 dictionary.append((prob,file_dictionary))
                
             sort_dictionary=sorted(dictionary, key=lambda tup: tup[0] )
-            num=int(data-portion*len(confidence))
+            num=int(data_portion*len(confidence))
             count=0
             print("len confidence",len(confidence))
             print("numbbbber is :",num)
