@@ -284,7 +284,7 @@ def example2feature(example, tokenizer, label_map, max_seq_length):
                 predict_mask=predict_mask,
                 label_ids=label_ids)
 
-    #return feat
+    return feat
 
 class NerDataset(data.Dataset):
     def __init__(self, examples, tokenizer, label_map, max_seq_length):
