@@ -19,7 +19,6 @@ from torch.utils import data
 import argparse
 from tqdm import tqdm, trange
 import collections
-
 from pytorch_pretrained_bert.modeling import BertModel, BertForTokenClassification, BertLayerNorm
 import pickle
 from pytorch_pretrained_bert.optimization import BertAdam, warmup_linear
@@ -87,13 +86,9 @@ do_lower_case = False
 # save_checkpoints_steps = 1000
 # "How many steps to make in each estimator call."
 # iterations_per_loop = 1000
-parser = argparse.ArgumentParser()
-parser.add_argument("-- data-portion",
-                        default=0.025,
-                        type=float,
-                        help="data portion.")
-args = parser.parse_args() 
-
+#parser = argparse.ArgumentParser()
+#parser.add_argument("-- data_portion", default=0.025, type=float,  help="data portion.")
+#args = parser.parse_args() 
 # %%
 '''
 Functions and Classes for read and organize data set
@@ -290,7 +285,7 @@ def example2feature(example, tokenizer, label_map, max_seq_length):
                 predict_mask=predict_mask,
                 label_ids=label_ids)
 
-    #return feat
+    return feat
 
 class NerDataset(data.Dataset):
     def __init__(self, examples, tokenizer, label_map, max_seq_length):
@@ -832,15 +827,14 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
                 dictionary.append((prob,file_dictionary))
                
             sort_dictionary=sorted(dictionary, key=lambda tup: tup[0] )
-            num=int(data-portion*len(confidence))
+            #num=int(0.025*len(confidence))
+            num=122
             count=0
             print("len confidence",len(confidence))
             print("numbbbber is :",num)
+            nextfile=open("/content/Arman-Fold1/data/Fold1/valid.txt", "w")
             for key in sort_dictionary:
                 count +=1
-                #print("count is :", count)
-                if count == num:
-                     return test_acc, f1
                 conf=key[0]
                 #print(conf)
                 dic=key[1]
@@ -850,13 +844,25 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
                     #print(key_a)
                     textlist=dic[key_a]
                     #print(textlist)
-                    if key_a == ".":
-                        
-                        writer.write("%s %s\n\n" % (key_a, textlist))
-                                    
-                    else:
-                        writer.write("%s %s\n" % ( key_a,textlist ))
+                    if count>=num:
+                        if key_a == ".":
+                            
+                            nextfile.write("%s %s\n\n" % (key_a, textlist))
+                                        
+                        else:
+                            nextfile.write("%s %s\n" % ( key_a,textlist ))
                                              
+                        
+                                    
+                
+                    else:
+                        if key_a == ".":
+                            
+                            writer.write("%s %s\n\n" % (key_a, textlist))
+                                        
+                        else:
+                            writer.write("%s %s\n" % ( key_a,textlist ))
+    return test_acc, f1                             
 
                 
 
@@ -917,7 +923,6 @@ for epoch in range(start_epoch, total_train_epochs):
         valid_f1_prev = valid_f1
     '''
 evaluate(model, test_dataloader, batch_size, total_train_epochs, 'Test_set')
-
 
 #%%
 '''
