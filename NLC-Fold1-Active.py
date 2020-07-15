@@ -19,7 +19,6 @@ from torch.utils import data
 import argparse
 from tqdm import tqdm, trange
 import collections
-from google.colab import files
 from pytorch_pretrained_bert.modeling import BertModel, BertForTokenClassification, BertLayerNorm
 import pickle
 from pytorch_pretrained_bert.optimization import BertAdam, warmup_linear
@@ -72,7 +71,7 @@ learning_rate0 = 5e-5
 lr0_crf_fc = 8e-5
 weight_decay_finetune = 1e-5 #0.01
 weight_decay_crf_fc = 5e-6 #0.005
-total_train_epochs = 1
+total_train_epochs = 20
 gradient_accumulation_steps = 1
 warmup_proportion = 0.1
 output_dir = './content/Arman-Fold1/output/'
@@ -924,9 +923,6 @@ for epoch in range(start_epoch, total_train_epochs):
         valid_f1_prev = valid_f1
     '''
 evaluate(model, test_dataloader, batch_size, total_train_epochs, 'Test_set')
-
-files.download('/content/Arman-Fold1/data/Fold1/train.txt')
-files.download('/content/Arman-Fold1/data/Fold1/valid.txt')
 
 #%%
 '''
