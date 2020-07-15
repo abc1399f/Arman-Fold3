@@ -54,7 +54,7 @@ print('Cuda is available?', cuda_yes)
 device = torch.device("cuda:0" if cuda_yes else "cpu")
 print('Device:', device)
 
-data_dir = os.path.join( '/content/Arman-Fold1/data/Fold1/')
+data_dir = os.path.join( '/content/Arman-Fold3/data/Fold3/')
 # "Whether to run training."
 do_train = True
 # "Whether to run eval on the dev set."
@@ -74,7 +74,7 @@ weight_decay_crf_fc = 5e-6 #0.005
 total_train_epochs = 20
 gradient_accumulation_steps = 1
 warmup_proportion = 0.1
-output_dir = './content/Arman-Fold1/output/'
+output_dir = './content/Arman-Fold3/output/'
 bert_model_scale = 'bert-base-multilingual-cased'
 do_lower_case = False
 # eval_batch_size = 8
@@ -808,7 +808,7 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
     print('--------------------------------------------------------------')
     dictionary=[]
     
-    with open("/content/Arman-Fold1/data/Fold1/train.txt", "w") as writer:
+    with open("/content/Arman-Fold3/data/Fold3/train.txt", "w") as writer:
             for k in range(len(train_examples)):
                 textlist=train_examples[k].words
                 labellist=train_examples[k].labels
@@ -832,7 +832,7 @@ def evaluate(model, predict_dataloader, batch_size, epoch_th, dataset_name):
             count=0
             print("len confidence",len(confidence))
             print("numbbbber is :",num)
-            nextfile=open("/content/Arman-Fold1/data/Fold1/valid.txt", "w")
+            nextfile=open("/content/Arman-Fold3/data/Fold3/valid.txt", "w")
             for key in sort_dictionary:
                 count +=1
                 conf=key[0]
