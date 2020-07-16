@@ -678,7 +678,12 @@ class BERT_CRF_NER(nn.Module):
         path = torch.zeros((batch_size, T), dtype=torch.long).to(self.device)
 
         # max p(z1:t,all_x|theta)
-        a=F.softmax(log_delta.squeeze(), dim=1)
+        shape=log_delta.squeeze().size()
+        if len(shape)==1:
+
+          a=F.softmax(log_delta, dim=1)
+        else:
+          a=F.softmax(log_delta.squeeze(), dim=1)
       
         max_logLL_allz_allx, path[:, -1] = torch.max(a, -1)
         for t in range(T-2, -1, -1):
